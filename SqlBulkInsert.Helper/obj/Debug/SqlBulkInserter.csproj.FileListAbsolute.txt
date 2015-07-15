@@ -1,0 +1,4 @@
+C:\rt\Customers\Customers\AmericanRoller\SqlBulkInserter\SqlBulkInserter\bin\Debug\SqlBulkInserter.dll
+C:\rt\Customers\Customers\AmericanRoller\SqlBulkInserter\SqlBulkInserter\bin\Debug\SqlBulkInserter.pdb
+C:\rt\Customers\Customers\AmericanRoller\SqlBulkInserter\SqlBulkInserter\obj\Debug\SqlBulkInserter.dll
+C:\rt\Customers\Customers\AmericanRoller\SqlBulkInserter\SqlBulkInserter\obj\Debug\SqlBulkInserter.pdb

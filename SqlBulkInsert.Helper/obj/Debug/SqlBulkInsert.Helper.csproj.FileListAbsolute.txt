@@ -1,0 +1,9 @@
+C:\rt\Customers\Customers\AmericanRoller\SqlBulkInserter\SqlBulkInserter\bin\Debug\SqlBulkInsert.Helper.dll
+C:\rt\Customers\Customers\AmericanRoller\SqlBulkInserter\SqlBulkInserter\bin\Debug\SqlBulkInsert.Helper.pdb
+C:\rt\Customers\Customers\AmericanRoller\SqlBulkInserter\SqlBulkInserter\obj\Debug\SqlBulkInsert.Helper.dll
+C:\rt\Customers\Customers\AmericanRoller\SqlBulkInserter\SqlBulkInserter\obj\Debug\SqlBulkInsert.Helper.pdb
+C:\Users\pgoldbach\Documents\GitHub\SqlBulkInsert.Helper\SqlBulkInsert.Helper\bin\Debug\SqlBulkInsert.Helper.dll
+C:\Users\pgoldbach\Documents\GitHub\SqlBulkInsert.Helper\SqlBulkInsert.Helper\bin\Debug\SqlBulkInsert.Helper.pdb
+C:\Users\pgoldbach\Documents\GitHub\SqlBulkInsert.Helper\SqlBulkInsert.Helper\obj\Debug\SqlBulkInsert.Helper.csprojResolveAssemblyReference.cache
+C:\Users\pgoldbach\Documents\GitHub\SqlBulkInsert.Helper\SqlBulkInsert.Helper\obj\Debug\SqlBulkInsert.Helper.dll
+C:\Users\pgoldbach\Documents\GitHub\SqlBulkInsert.Helper\SqlBulkInsert.Helper\obj\Debug\SqlBulkInsert.Helper.pdb
