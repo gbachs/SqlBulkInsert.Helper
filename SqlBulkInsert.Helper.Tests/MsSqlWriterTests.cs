@@ -56,7 +56,7 @@ namespace SqlBulkInsert.Helper.Tests
         }
 
         [TestMethod]
-        public void Should_Create_SqlMetadata_From_Object_With_Identity_Column()
+        public void Should_insert_using_object_with_identity_column()
         {
             var items = CreateTestData(() => new TestObjectWithIdentity());
 
@@ -74,7 +74,7 @@ namespace SqlBulkInsert.Helper.Tests
         }
 
         [TestMethod]
-        public void Should_Create_SqlMetadata_From_Object()
+        public void Should_insert_using_object_without_identity_column()
         {
             var items = CreateTestData(() => new TestObjectWithoutIdentity());
 
