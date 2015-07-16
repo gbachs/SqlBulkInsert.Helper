@@ -18,7 +18,6 @@ namespace SqlBulkInsert.Helper
                 obj = new NullObject();
             }
 
-
             lock (CachedItems)
             {
                 if (CachedItems.ContainsKey(key))

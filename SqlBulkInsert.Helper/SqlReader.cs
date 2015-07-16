@@ -3,11 +3,11 @@ using System.Data;
 using System.Globalization;
 using System.Linq;
 using SqlBulkInsert.Helper.Extensions;
+using SqlBulkInsert.Helper.SqlWriters;
 
 namespace SqlBulkInsert.Helper
 {
-    public class SqlReader<T>
-        where T : new()
+    public class SqlReader<T> where T : new()
     {
         private readonly SqlMetadata<T> _metadata;
 
@@ -21,13 +21,15 @@ namespace SqlBulkInsert.Helper
             var fieldsString = string.Join(",", _metadata.AllProperties.Select(x => x.ColumnName).ToArray());
             var loadedContainerIds = 0;
             var returnValues = new List<T>();
+
             while (loadedContainerIds < containerIds.Count())
             {
                 var containerIdsToLoad = containerIds.Skip(loadedContainerIds).Take(1000).ToList();
-                var containerIdsString = string.Join(",", containerIdsToLoad.Select(x => x.ToString(CultureInfo.InvariantCulture)).ToArray());
+                var containerIdsString = string.Join(",",
+                    containerIdsToLoad.Select(x => x.ToString(CultureInfo.InvariantCulture)).ToArray());
                 var sql = string.Format("SELECT {0} FROM {1} WHERE {2} IN ({3})",
-                                                 fieldsString, _metadata.TableName, _metadata.ContainerIdProperties[0].ColumnName,
-                                                 containerIdsString);
+                    fieldsString, _metadata.TableName, _metadata.ContainerIdProperties[0].ColumnName,
+                    containerIdsString);
                 returnValues = returnValues.Concat(transaction.Select(sql, CreateItem).ToList()).ToList();
                 loadedContainerIds += containerIdsToLoad.Count();
             }

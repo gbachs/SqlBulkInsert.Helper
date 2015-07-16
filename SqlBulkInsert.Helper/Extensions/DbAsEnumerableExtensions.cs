@@ -62,7 +62,6 @@ namespace SqlBulkInsert.Helper.Extensions
             return trans.Select(sql, setupCommand).Select(selector);
         }
 
-
         public static IEnumerable<T> Select<T>(this IDbTransaction trans, string sql, Func<IDataRecord, T> selector)
         {
             return trans.Select(sql, cmd => { }, selector);
