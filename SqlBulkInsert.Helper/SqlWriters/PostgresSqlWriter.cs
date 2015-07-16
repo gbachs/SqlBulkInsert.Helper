@@ -28,7 +28,6 @@ namespace SqlBulkInsert.Helper.SqlWriters
             {
                 BulkInsertData((NpgsqlTransaction)transaction, items);
             }
-
         }
 
         private void BulkInsertData(NpgsqlTransaction transaction, IEnumerable<T> items)

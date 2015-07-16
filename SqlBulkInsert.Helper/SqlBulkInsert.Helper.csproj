@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache.cs" />
+    <Compile Include="Extensions\IDbConnectionExtensions.cs" />
     <Compile Include="SqlWriters\ColumnAttributes.cs" />
     <Compile Include="Extensions\DbAsEnumerableExtensions.cs" />
     <Compile Include="Extensions\IDbTransactionExtensions.cs" />

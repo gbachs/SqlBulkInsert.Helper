@@ -106,17 +106,17 @@ namespace SqlBulkInsert.Helper.SqlWriters
 
             if (_metadata.TreeParentIdProperty == null)
             {
-                sql.Append(string.Format("SELECT TOP {0} {1} FROM {2} WHERE ", list.Count,
+                sql.Append(string.Format("SELECT TOP {0} {1} FROM {2} ", list.Count,
                     _metadata.GeneratedIdProperty.ColumnName, _metadata.TableName));
             }
             else
             {
-                sql.Append(string.Format("SELECT TOP {0} {1},{2} FROM {3} WHERE ", list.Count,
+                sql.Append(string.Format("SELECT TOP {0} {1},{2} FROM {3} ", list.Count,
                     _metadata.GeneratedIdProperty.ColumnName, _metadata.TreeParentIdProperty.ColumnName,
                     _metadata.TableName));
             }
 
-            var andOperator = "";
+            var andOperator = " WHERE ";
 
             for (var i = 0; i < _metadata.ContainerIdProperties.Count; i++)
             {
