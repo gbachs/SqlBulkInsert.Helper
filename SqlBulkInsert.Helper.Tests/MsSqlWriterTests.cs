@@ -22,19 +22,33 @@ namespace SqlBulkInsert.Helper.Tests
 
                 const string dropTableIfExistsSql =
                     @"IF (EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'TestWithIdentity'))
+					BEGIN
+					   DROP TABLE [dbo].[TestWithIdentity]
+					END
+                    IF (EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'TestWithoutIdentity'))
                     BEGIN
-                       DROP TABLE [dbo].[TestWithIdentity]
+	                    DROP TABLE [dbo].[TestWithoutIdentity]
                     END";
 
                 const string createTableSql = @"CREATE TABLE [dbo].[TestWithIdentity](
-	                    [Id] [int] IDENTITY(1,1) NOT NULL,
-	                    [StringColumn] [nvarchar](50) NULL,
-	                    [BoolProperty] [bit] NULL,
-                     CONSTRAINT [PK_TestWithIdentity] PRIMARY KEY CLUSTERED
-                    (
-	                    [Id] ASC
-                    )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
-                    ) ON [PRIMARY]";
+						[Id] [int] IDENTITY(1,1) NOT NULL,
+						[StringColumn] [nvarchar](50) NULL,
+						[BoolProperty] [bit] NULL,
+					 CONSTRAINT [PK_TestWithIdentity] PRIMARY KEY CLUSTERED
+					(
+						[Id] ASC
+					)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+					) ON [PRIMARY]
+
+                    CREATE TABLE [dbo].[TestWithoutIdentity](
+						[Id] uniqueidentifier NOT NULL,
+						[StringColumn] [nvarchar](50) NULL,
+						[BoolProperty] [bit] NULL,
+					 CONSTRAINT [PK_TestWithoutIdentity] PRIMARY KEY CLUSTERED
+					(
+						[Id] ASC
+					)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+					) ON [PRIMARY]";
 
                 connection.ExecuteNonQuery(dropTableIfExistsSql);
                 connection.ExecuteNonQuery(createTableSql);
@@ -42,11 +56,11 @@ namespace SqlBulkInsert.Helper.Tests
         }
 
         [TestMethod]
-        public void Should_Create_SqlMetadata_From_Object()
+        public void Should_Create_SqlMetadata_From_Object_With_Identity_Column()
         {
-            var items = CreateTestData();
+            var items = CreateTestData(() => new TestObjectWithIdentity());
 
-            var sqlWriter = new MsSqlWriter<TestObject>();
+            var sqlWriter = new MsSqlWriter<TestObjectWithIdentity>();
 
             using (var connection = new SqlConnection(ConnectionString))
             {
@@ -59,21 +73,41 @@ namespace SqlBulkInsert.Helper.Tests
             }
         }
 
-        private static IEnumerable<TestObject> CreateTestData()
+        [TestMethod]
+        public void Should_Create_SqlMetadata_From_Object()
         {
-            for (var i = 0; i < 100000; i++)
+            var items = CreateTestData(() => new TestObjectWithoutIdentity());
+
+            var sqlWriter = new MsSqlWriter<TestObjectWithoutIdentity>();
+
+            using (var connection = new SqlConnection(ConnectionString))
             {
-                yield return new TestObject
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
                 {
-                    BoolProperty = i%2 == 0,
-                    StringProperty = Guid.NewGuid().ToString()
-                };
+                    sqlWriter.Write(transaction, items.ToList());
+                    transaction.Commit();
+                }
+            }
+        }
+
+        private static IEnumerable<T> CreateTestData<T>(Func<T> create)
+        {
+            for (var i = 0; i < 1000000; i++)
+            {
+                yield return create();
             }
         }
 
         [Table("TestWithIdentity")]
-        public class TestObject
+        public class TestObjectWithIdentity
         {
+            public TestObjectWithIdentity()
+            {
+                StringProperty = Guid.NewGuid().ToString();
+                BoolProperty = DateTime.Now.Ticks % 2 == 0;
+            }
+
             [Column("StringColumn")]
             public string StringProperty { get; set; }
 
@@ -82,6 +116,26 @@ namespace SqlBulkInsert.Helper.Tests
 
             [GeneratedColumn("Id")]
             public long Id { get; set; }
+        }
+
+        [Table("TestWithoutIdentity")]
+        public class TestObjectWithoutIdentity
+        {
+            public TestObjectWithoutIdentity()
+            {
+                StringProperty = Guid.NewGuid().ToString();
+                BoolProperty = DateTime.Now.Ticks % 2 == 0;
+                Id = Guid.NewGuid();
+            }
+
+            [Column("StringColumn")]
+            public string StringProperty { get; set; }
+
+            [Column("BoolProperty")]
+            public bool BoolProperty { get; set; }
+
+            [Column("Id")]
+            public Guid Id { get; set; }
         }
     }
 }
