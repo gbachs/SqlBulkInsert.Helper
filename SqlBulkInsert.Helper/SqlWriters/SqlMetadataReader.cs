@@ -189,7 +189,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
 
         public object this[int i]
         {
-            get { throw new NotImplementedException(); }
+            get { return GetValue(i); }
         }
 
         protected void Dispose(bool disposing)

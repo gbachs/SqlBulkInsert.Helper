@@ -50,12 +50,12 @@ namespace SqlBulkInsert.Helper.SqlWriters
         {
             var commandString = new StringBuilder();
 
-            commandString.Append(string.Format("COPY {0} (", _metadata.TableName));
+            commandString.Append(string.Format("COPY \"{0}\" (", _metadata.TableName));
 
             for (var i = 0; i < _metadata.AllProperties.Count; i++)
             {
                 var property = _metadata.AllProperties[i];
-                commandString.Append(property.ColumnName);
+                commandString.Append(string.Format("\"{0}\"", property.ColumnName));
 
                 if (i != (_metadata.AllProperties.Count - 1))
                 {
