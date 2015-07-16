@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlBulkInsert.Helper", "SqlBulkInsert.Helper\SqlBulkInsert.Helper.csproj", "{03AA86C1-DC09-43FF-A11C-C2158E2FCC59}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SqlBulkInsert.Helper.Tests", "SqlBulkInsert.Helper.Tests\SqlBulkInsert.Helper.Tests.csproj", "{9D10B724-CE07-4128-9C6A-CD35B6697A35}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{03AA86C1-DC09-43FF-A11C-C2158E2FCC59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{03AA86C1-DC09-43FF-A11C-C2158E2FCC59}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03AA86C1-DC09-43FF-A11C-C2158E2FCC59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9D10B724-CE07-4128-9C6A-CD35B6697A35}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9D10B724-CE07-4128-9C6A-CD35B6697A35}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9D10B724-CE07-4128-9C6A-CD35B6697A35}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9D10B724-CE07-4128-9C6A-CD35B6697A35}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

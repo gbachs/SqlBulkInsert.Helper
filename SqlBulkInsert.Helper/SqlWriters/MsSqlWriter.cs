@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -156,8 +155,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
             var updateCmd = (SqlCommand) transaction.CreateTextCommand(sql);
             updateCmd.UpdatedRowSource = UpdateRowSource.None;
 
-            var parentIdParam = updateCmd.Parameters.Add("@" + _metadata.TreeParentIdProperty.ColumnName,
-                SqlDbType.BigInt);
+            var parentIdParam = updateCmd.Parameters.Add("@" + _metadata.TreeParentIdProperty.ColumnName, SqlDbType.BigInt);
             parentIdParam.SourceVersion = DataRowVersion.Current;
             parentIdParam.SourceColumn = _metadata.TreeParentIdProperty.ColumnName;
 
