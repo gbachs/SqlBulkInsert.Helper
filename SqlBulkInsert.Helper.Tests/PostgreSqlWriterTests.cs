@@ -41,10 +41,22 @@ namespace SqlBulkInsert.Helper.Tests
         }
 
         [TestMethod]
-        public void Should_insert_data_without_identity()
+        public void Should_insert_data_with_internal_transaction()
         {
-            var items = CreateTestData(() => new TestObjectWithoutIdentity());
+            var items = CreateTestData(100, () => new TestObjectWithoutIdentity());
+            var sqlWriter = new PostgreSqlWriter<TestObjectWithoutIdentity>();
 
+            using (var connection = new NpgsqlConnection(ConnectionString))
+            {
+                connection.Open();
+                sqlWriter.Write(connection, items.ToList());
+            }
+        }
+
+        [TestMethod]
+        public void Should_insert_data_with_external_transaction()
+        {
+            var items = CreateTestData(100, () => new TestObjectWithoutIdentity());
             var sqlWriter = new PostgreSqlWriter<TestObjectWithoutIdentity>();
 
             using (var connection = new NpgsqlConnection(ConnectionString))
@@ -53,7 +65,22 @@ namespace SqlBulkInsert.Helper.Tests
                 using (var transaction = connection.BeginTransaction())
                 {
                     sqlWriter.Write(transaction, items.ToList());
-                    transaction.Commit();
+                }
+            }
+        }
+
+        [TestMethod]
+        public void Should_insert_data_without_identity()
+        {
+            var items = CreateTestData(100, () => new TestObjectWithoutIdentity());
+            var sqlWriter = new PostgreSqlWriter<TestObjectWithoutIdentity>();
+
+            using (var connection = new NpgsqlConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    sqlWriter.Write(transaction, items.ToList());
                 }
             }
         }
@@ -61,7 +88,7 @@ namespace SqlBulkInsert.Helper.Tests
         [TestMethod]
         public void Should_insert_using_object_with_identity_column()
         {
-            var items = CreateTestData(() => new TestObjectWithIdentity()).ToList();
+            var items = CreateTestData(100, () => new TestObjectWithIdentity()).ToList();
 
             var sqlWriter = new PostgreSqlWriter<TestObjectWithIdentity>();
 
@@ -71,7 +98,6 @@ namespace SqlBulkInsert.Helper.Tests
                 using (var transaction = connection.BeginTransaction())
                 {
                     sqlWriter.Write(transaction, items);
-                    transaction.Commit();
                 }
             }
 
@@ -81,9 +107,9 @@ namespace SqlBulkInsert.Helper.Tests
             }
         }
 
-        private static IEnumerable<T> CreateTestData<T>(Func<T> create)
+        private static IEnumerable<T> CreateTestData<T>(int listCount, Func<T> create)
         {
-            for (var i = 0; i < 100000; i++)
+            for (var i = 0; i < listCount; i++)
             {
                 yield return create();
             }

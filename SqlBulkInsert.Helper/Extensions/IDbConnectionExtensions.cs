@@ -35,5 +35,14 @@ namespace SqlBulkInsert.Helper.Extensions
                 return cmd.ExecuteNonQuery();
             }
         }
+
+        public static void WithinTransaction(this IDbConnection thisObj, Action<IDbTransaction> action)
+        {
+            using (var transaction = thisObj.BeginTransaction())
+            {
+                action(transaction);
+                transaction.Commit();
+            }
+        }
     }
 }

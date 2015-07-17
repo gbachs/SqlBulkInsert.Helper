@@ -55,9 +55,9 @@ namespace SqlBulkInsert.Helper.SqlWriters
         private static List<ColumnProperty> GetColumns<TColumnType>()
             where TColumnType : Attribute, IColumnAttribute
         {
-            return Enumerable.Where(typeof (T)
+            return typeof (T)
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.GetProperty)
-                .Select(CreateColumnProperty<TColumnType>), x => x != null)
+                .Select(CreateColumnProperty<TColumnType>).Where(x => x != null)
                 .ToList();
         }
 

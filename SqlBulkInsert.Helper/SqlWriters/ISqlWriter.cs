@@ -5,6 +5,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
 {
     public interface ISqlWriter<T>
     {
-        void Write(IDbTransaction transaction, List<T> items);
+        void Write(IDbTransaction transaction, List<T> list);
+        void Write(IDbConnection connection, List<T> list);
     }
 }

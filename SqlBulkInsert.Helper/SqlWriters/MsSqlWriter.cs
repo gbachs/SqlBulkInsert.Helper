@@ -14,22 +14,30 @@ namespace SqlBulkInsert.Helper.SqlWriters
 
         public MsSqlWriter()
         {
-            _metadata = Cache.GetOrCreate(typeof (T).ToString(), () => new SqlMetadata<T>());
+            _metadata = Cache.GetOrCreate(typeof(T).ToString(), () => new SqlMetadata<T>());
             _bulkCopyOptions = SqlBulkCopyOptions.Default;
         }
 
-        public void Write(IDbTransaction transaction, List<T> items)
+        public void Write(IDbTransaction transaction, List<T> list)
         {
-            if (items == null || !(items.Any()))
+            if (list == null || !(list.Any()))
                 return;
 
             lock (GetLocker())
             {
-                BulkSaveItems(transaction, items);
+                BulkSaveItems(transaction, list);
 
                 if (_metadata.GeneratedIdProperty != null)
-                    LoadGeneratedIdsAndAssignTreeParentIds(transaction, items);
+                    LoadGeneratedIdsAndAssignTreeParentIds(transaction, list);
             }
+        }
+
+        public void Write(IDbConnection connection, List<T> list)
+        {
+            connection.WithinTransaction(transaction =>
+            {
+                Write(transaction, list);
+            });
         }
 
         private static object GetLocker()
@@ -39,7 +47,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
 
         private void BulkSaveItems(IDbTransaction transaction, IEnumerable<T> list)
         {
-            var sqlBulkCopy = CreateSqlBulkCopy((SqlTransaction) transaction);
+            var sqlBulkCopy = CreateSqlBulkCopy((SqlTransaction)transaction);
             using (var dataReader = new SqlMetadataReader<T>(_metadata.AllProperties, list))
             {
                 sqlBulkCopy.WriteToServer(dataReader);
@@ -85,7 +93,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
             else
             {
                 using (var selectCmd = CreateSelectIdsCmd(transaction, list))
-                using (var adapter = new SqlDataAdapter((SqlCommand) selectCmd))
+                using (var adapter = new SqlDataAdapter((SqlCommand)selectCmd))
                 using (var entityTable = new DataTable())
                 {
                     adapter.Fill(entityTable);
@@ -152,7 +160,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
         {
             var sql = string.Format("UPDATE {0} SET {1} = @{1} WHERE {2}=@{2}", _metadata.TableName,
                 _metadata.TreeParentIdProperty.ColumnName, _metadata.GeneratedIdProperty.ColumnName);
-            var updateCmd = (SqlCommand) transaction.CreateTextCommand(sql);
+            var updateCmd = (SqlCommand)transaction.CreateTextCommand(sql);
             updateCmd.UpdatedRowSource = UpdateRowSource.None;
 
             var parentIdParam = updateCmd.Parameters.Add("@" + _metadata.TreeParentIdProperty.ColumnName, SqlDbType.BigInt);
@@ -171,7 +179,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
         {
             using (var updateCmd = CreateUpdateTreeParentIdsCmd(transaction))
             {
-                adapter.UpdateCommand = (SqlCommand) updateCmd;
+                adapter.UpdateCommand = (SqlCommand)updateCmd;
                 const int allUpdatesInOneBatch = 0;
                 adapter.UpdateBatchSize = allUpdatesInOneBatch;
 
@@ -180,7 +188,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
                     var rawParentIdx = _metadata.TreeParentIdProperty.GetValue<long?>(list[idx]);
                     if (rawParentIdx == null) continue;
 
-                    var parentIdx = (int) rawParentIdx.Value;
+                    var parentIdx = (int)rawParentIdx.Value;
                     var parentId = _metadata.GeneratedIdProperty.GetValue<long>(list[parentIdx]);
                     entityTable.Rows[idx][1] = parentId;
 

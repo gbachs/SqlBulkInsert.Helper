@@ -84,12 +84,12 @@ namespace SqlBulkInsert.Helper.SqlWriters
 
         public bool GetBoolean(int i)
         {
-            throw new NotImplementedException();
+            return (bool)GetValue(i);
         }
 
         public byte GetByte(int i)
         {
-            throw new NotImplementedException();
+            return (byte)GetValue(i);
         }
 
         public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length)
@@ -99,7 +99,8 @@ namespace SqlBulkInsert.Helper.SqlWriters
 
         public char GetChar(int i)
         {
-            throw new NotImplementedException();
+            return (char)GetValue(i);
+
         }
 
         public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length)
@@ -119,47 +120,47 @@ namespace SqlBulkInsert.Helper.SqlWriters
 
         public DateTime GetDateTime(int i)
         {
-            throw new NotImplementedException();
+            return (DateTime)GetValue(i);
         }
 
         public decimal GetDecimal(int i)
         {
-            throw new NotImplementedException();
+            return (decimal)GetValue(i);
         }
 
         public double GetDouble(int i)
         {
-            throw new NotImplementedException();
+            return (double)GetValue(i);
         }
 
         public Type GetFieldType(int i)
         {
-            throw new NotImplementedException();
+            return GetValue(i).GetType();
         }
 
         public float GetFloat(int i)
         {
-            throw new NotImplementedException();
+            return (float)GetValue(i);
         }
 
         public Guid GetGuid(int i)
         {
-            throw new NotImplementedException();
+            return (Guid)GetValue(i);
         }
 
         public short GetInt16(int i)
         {
-            throw new NotImplementedException();
+            return (short)GetValue(i);
         }
 
         public int GetInt32(int i)
         {
-            throw new NotImplementedException();
+            return (int)GetValue(i);
         }
 
         public long GetInt64(int i)
         {
-            throw new NotImplementedException();
+            return (long) GetValue(i);
         }
 
         public string GetName(int i)
@@ -169,7 +170,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
 
         public string GetString(int i)
         {
-            throw new NotImplementedException();
+            return (string)GetValue(i);
         }
 
         public int GetValues(object[] values)
