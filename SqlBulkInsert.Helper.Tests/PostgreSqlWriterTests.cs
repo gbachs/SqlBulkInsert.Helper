@@ -11,24 +11,24 @@ namespace SqlBulkInsert.Helper.Tests
     [TestClass]
     public class PostgreSqlWriterTests
     {
-        private const string ConnectionString = @"User ID=postgres;Password=Tdci8760;Host=localhost;Port=5432;Database=TestDatabase;";
+        private const string ConnectionString = @"User ID=postgres;Password=password;Host=localhost;Port=5432;Database=TestDatabase;";
 
         [TestInitialize]
         public void TestInitialize()
         {
             const string dropTestWithoutIdentityColumnTableSql = @"DROP TABLE IF EXISTS ""TestWithoutIdentity""";
             const string createTestWithoutIdentityTableSql = @"CREATE TABLE IF NOT EXISTS ""TestWithoutIdentity""
-                                                            (
-                                                              ""Id"" uuid,
-                                                              ""StringColumn"" character(500),
-                                                              ""BoolProperty"" boolean
-                                                            );";
+															(
+															  ""Id"" uuid,
+															  ""StringColumn"" character(500),
+															  ""BoolProperty"" boolean
+															);";
 
             const string dropTestWithIdentityColumnTableSql = @"DROP TABLE IF EXISTS ""TestWithIdentity""";
             const string createTestWithIdentityTableSql = @"CREATE TABLE ""TestWithIdentity"" (
-                                                            ""Id"" SERIAL PRIMARY KEY,
-                                                            ""StringColumn"" character(500),
-                                                            ""BoolProperty"" boolean);";
+															""Id"" SERIAL PRIMARY KEY,
+															""StringColumn"" character(500),
+															""BoolProperty"" boolean);";
 
             using (var connection = new NpgsqlConnection(ConnectionString))
             {
@@ -45,17 +45,17 @@ namespace SqlBulkInsert.Helper.Tests
         {
             var items = CreateTestData(() => new TestObjectWithoutIdentity());
 
-			var sqlWriter = new PostgreSqlWriter<TestObjectWithoutIdentity>();
+            var sqlWriter = new PostgreSqlWriter<TestObjectWithoutIdentity>();
 
-			using (var connection = new NpgsqlConnection(ConnectionString))
-			{
-				connection.Open();
-				using (var transaction = connection.BeginTransaction())
-				{
-					sqlWriter.Write(transaction, items.ToList());
-					transaction.Commit();
-				}
-			}
+            using (var connection = new NpgsqlConnection(ConnectionString))
+            {
+                connection.Open();
+                using (var transaction = connection.BeginTransaction())
+                {
+                    sqlWriter.Write(transaction, items.ToList());
+                    transaction.Commit();
+                }
+            }
         }
 
         [TestMethod]
@@ -83,7 +83,7 @@ namespace SqlBulkInsert.Helper.Tests
 
         private static IEnumerable<T> CreateTestData<T>(Func<T> create)
         {
-            for (var i = 0; i < 10000; i++)
+            for (var i = 0; i < 100000; i++)
             {
                 yield return create();
             }
@@ -108,7 +108,6 @@ namespace SqlBulkInsert.Helper.Tests
             [Column("Id")]
             public Guid Id { get; set; }
         }
-
 
         [Table("TestWithIdentity")]
         public class TestObjectWithIdentity
