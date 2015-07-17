@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using SqlBulkInsert.Helper.Extensions;
 
-namespace SqlBulkInsert.Helper.SqlWriters
+namespace SqlBulkInsert.Helper.SqlWriters.MsSql
 {
     public class MsSqlWriter<T> : ISqlWriter<T>
     {

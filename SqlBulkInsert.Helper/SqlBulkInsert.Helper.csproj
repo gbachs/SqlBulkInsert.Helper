@@ -52,12 +52,13 @@
     <Compile Include="Extensions\IDbTransactionExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="SqlWriters\ISqlWriter.cs" />
-    <Compile Include="SqlWriters\PostgreSqlWriter.cs" />
+    <Compile Include="SqlWriters\PostreSql\BinaryInportCommandFactory.cs" />
+    <Compile Include="SqlWriters\PostreSql\PostgreSqlWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlWriters\SqlMetadata.cs" />
     <Compile Include="SqlWriters\SqlMetadataReader.cs" />
     <Compile Include="SqlReader.cs" />
-    <Compile Include="SqlWriters\MsSqlWriter.cs" />
+    <Compile Include="SqlWriters\MsSql\MsSqlWriter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

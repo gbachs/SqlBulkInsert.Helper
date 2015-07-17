@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlBulkInsert.Helper.Extensions;
 using SqlBulkInsert.Helper.SqlWriters;
+using SqlBulkInsert.Helper.SqlWriters.MsSql;
 
 namespace SqlBulkInsert.Helper.Tests
 {

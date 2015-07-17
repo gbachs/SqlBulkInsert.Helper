@@ -5,8 +5,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Npgsql;
 using SqlBulkInsert.Helper.Extensions;
 using SqlBulkInsert.Helper.SqlWriters;
+using SqlBulkInsert.Helper.SqlWriters.PostreSql;
 
-namespace SqlBulkInsert.Helper.Tests
+namespace SqlBulkInsert.Helper.Tests.PostreSql
 {
     [TestClass]
     public class PostgreSqlWriterTests

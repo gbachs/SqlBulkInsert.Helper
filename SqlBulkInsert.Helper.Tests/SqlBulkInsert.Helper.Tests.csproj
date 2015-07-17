@@ -58,7 +58,8 @@
   </Choose>
   <ItemGroup>
     <Compile Include="MsSqlWriterTests.cs" />
-    <Compile Include="PostgreSqlWriterTests.cs" />
+    <Compile Include="PostreSql\PostgreSqlWriterTests.cs" />
+    <Compile Include="PostreSql\PostgresSqlBinaryImportCommandTests.cs" />
     <Compile Include="SqlMetadataTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
