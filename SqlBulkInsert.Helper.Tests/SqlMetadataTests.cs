@@ -40,6 +40,25 @@ namespace SqlBulkInsert.Helper.Tests
             Assert.IsNull(sqlMetadata.GeneratedIdProperty);
         }
 
+        [TestMethod]
+        public void Should_not_set_containerIds_property()
+        {
+            var sqlMetadata = new SqlMetadata<TestObjectWithoutGeneratedColumn>();
+
+            Assert.AreEqual(0, sqlMetadata.ContainerIdProperties.Count);
+        }
+
+        [TestMethod]
+        public void Should_set_containerIds_property()
+        {
+            var sqlMetadata = new SqlMetadata<TestObjectWithContainerId>();
+
+            Assert.IsNotNull(sqlMetadata.ContainerIdProperties);
+            Assert.AreEqual(1, sqlMetadata.ContainerIdProperties.Count);
+            Assert.AreEqual("ParentId", sqlMetadata.ContainerIdProperties[0].ColumnName);
+            Assert.AreEqual("ParentId", sqlMetadata.ContainerIdProperties[0].PropertyName);
+        }
+
         [Table("TestObjectTableName")]
         public class TestObject
         {
@@ -70,6 +89,25 @@ namespace SqlBulkInsert.Helper.Tests
 
             [Column("Id")]
             public Guid Id { get; set; }
+        }
+
+        [Table("TestObjectTableName")]
+        public class TestObjectWithContainerId
+        {
+            [Column("StringPropertyColumnName")]
+            public string StringProperty { get; set; }
+
+            [Column("DecimalProperty")]
+            public decimal DecimalProperty { get; set; }
+
+            [Column("BoolProperty")]
+            public bool BoolProperty { get; set; }
+
+            [GeneratedColumn("Id")]
+            public Guid Id { get; set; }
+
+            [ContainerIdColumn("ParentId")]
+            public Guid ParentId { get; set; }
         }
     }
 }

@@ -12,7 +12,7 @@ namespace SqlBulkInsert.Helper.Tests
     [TestClass]
     public class MsSqlWriterTests
     {
-        private const string ConnectionString = @"Server=.\;Database=TestDatabase;User Id=sa;Password=password;";
+        private const string ConnectionString = @"Server=.\tdcidev;Database=TestDatabase;User Id=sa;Password=Tdci8760;";
 
         [TestInitialize]
         public void TestInitialize()

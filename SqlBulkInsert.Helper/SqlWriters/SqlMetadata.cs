@@ -82,13 +82,11 @@ namespace SqlBulkInsert.Helper.SqlWriters
                 Property = property;
                 PropertyName = property.Name;
                 ColumnName = columnAttribute.ColumnName;
-                IsSingleValue = columnAttribute.IsSingleValue;
             }
 
             private PropertyInfo Property { get; set; }
             public string PropertyName { get; private set; }
             public string ColumnName { get; private set; }
-            public bool IsSingleValue { get; private set; }
 
             public TType GetValue<TType>(T obj)
             {

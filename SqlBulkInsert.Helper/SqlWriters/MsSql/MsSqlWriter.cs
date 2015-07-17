@@ -133,7 +133,7 @@ namespace SqlBulkInsert.Helper.SqlWriters.MsSql
 
                 var containerIdProperty = _metadata.ContainerIdProperties[i];
 
-                if (containerIdProperty.IsSingleValue || containerIdProperty.GetValue(list[0]) == null)
+                if (containerIdProperty.GetValue(list[0]) == null)
                 {
                     var value = containerIdProperty.GetValue(list[0]);
                     sql.Append(value == null
