@@ -1,5 +1,7 @@
 # SqlBulkInsert.Helper
 
+[![Build status](https://ci.appveyor.com/api/projects/status/yy19phy734qkghnt?svg=true)](https://ci.appveyor.com/project/gbachs/sqlbulkinsert-helper)
+
 Example of inserting a list of objects 
 ```csharp
 public class BulkInsertExample
