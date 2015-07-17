@@ -40,7 +40,7 @@ namespace SqlBulkInsert.Helper.Tests
             }
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void Should_insert_data_with_internal_transaction()
         {
             var items = CreateTestData(100, () => new TestObjectWithoutIdentity());
@@ -53,7 +53,7 @@ namespace SqlBulkInsert.Helper.Tests
             }
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void Should_insert_data_with_external_transaction()
         {
             var items = CreateTestData(100, () => new TestObjectWithoutIdentity());
@@ -69,7 +69,7 @@ namespace SqlBulkInsert.Helper.Tests
             }
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void Should_insert_data_without_identity()
         {
             var items = CreateTestData(100, () => new TestObjectWithoutIdentity());
@@ -85,7 +85,7 @@ namespace SqlBulkInsert.Helper.Tests
             }
         }
 
-        [TestMethod]
+        [TestMethod, TestCategory("IntegrationTest")]
         public void Should_insert_using_object_with_identity_column()
         {
             var items = CreateTestData(100, () => new TestObjectWithIdentity()).ToList();
