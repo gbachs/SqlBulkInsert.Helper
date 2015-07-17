@@ -50,7 +50,7 @@
     <Compile Include="Extensions\IDbTransactionExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
     <Compile Include="SqlWriters\ISqlWriter.cs" />
-    <Compile Include="SqlWriters\PostgresSqlWriter.cs" />
+    <Compile Include="SqlWriters\PostgreSqlWriter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SqlWriters\SqlMetadata.cs" />
     <Compile Include="SqlWriters\SqlMetadataReader.cs" />

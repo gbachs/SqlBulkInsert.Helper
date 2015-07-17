@@ -58,7 +58,7 @@ namespace SqlBulkInsert.Helper.Tests
 		[TestMethod]
 		public void Should_insert_using_object_with_identity_column()
 		{
-			var items = CreateTestData(() => new TestObjectWithIdentity());
+			var items = CreateTestData(() => new TestObjectWithIdentity()).ToList();
 
 			var sqlWriter = new MsSqlWriter<TestObjectWithIdentity>();
 
@@ -67,10 +67,15 @@ namespace SqlBulkInsert.Helper.Tests
 				connection.Open();
 				using (var transaction = connection.BeginTransaction())
 				{
-					sqlWriter.Write(transaction, items.ToList());
+					sqlWriter.Write(transaction, items);
 					transaction.Commit();
 				}
 			}
+
+		    foreach (var item in items)
+		    {
+		        Assert.AreNotEqual(0, item.Id);
+		    }
 		}
 
 		[TestMethod]

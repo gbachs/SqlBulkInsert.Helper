@@ -138,7 +138,7 @@ namespace SqlBulkInsert.Helper.SqlWriters
 
                     var containerIdsString = string.Join(",", containerIds.Select(x => x.ToString()).ToArray());
 
-                    sql.Append(string.Format("{0}{1} IN ({2})", andOperator, containerIdProperty.ColumnName,
+                    sql.Append(string.Format("{0} {1} IN ({2})", andOperator, containerIdProperty.ColumnName,
                         containerIdsString));
                 }
             }
