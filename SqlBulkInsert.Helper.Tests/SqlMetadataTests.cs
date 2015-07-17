@@ -59,6 +59,16 @@ namespace SqlBulkInsert.Helper.Tests
             Assert.AreEqual("ParentId", sqlMetadata.ContainerIdProperties[0].PropertyName);
         }
 
+        [TestMethod]
+        public void Should_set_TreeParentId_property()
+        {
+            var sqlMetadata = new SqlMetadata<TestObjectWithTreeId>();
+
+            Assert.IsNotNull(sqlMetadata.TreeParentIdProperty);
+            Assert.AreEqual("ParentId", sqlMetadata.TreeParentIdProperty.ColumnName);
+            Assert.AreEqual("ParentId", sqlMetadata.TreeParentIdProperty.PropertyName);
+        }
+
         [Table("TestObjectTableName")]
         public class TestObject
         {
@@ -107,6 +117,25 @@ namespace SqlBulkInsert.Helper.Tests
             public Guid Id { get; set; }
 
             [ContainerIdColumn("ParentId")]
+            public Guid ParentId { get; set; }
+        }
+
+        [Table("TestObjectTableName")]
+        public class TestObjectWithTreeId
+        {
+            [Column("StringPropertyColumnName")]
+            public string StringProperty { get; set; }
+
+            [Column("DecimalProperty")]
+            public decimal DecimalProperty { get; set; }
+
+            [Column("BoolProperty")]
+            public bool BoolProperty { get; set; }
+
+            [GeneratedColumn("Id")]
+            public Guid Id { get; set; }
+
+            [TreeParentIdColumn("ParentId")]
             public Guid ParentId { get; set; }
         }
     }
