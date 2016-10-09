@@ -1,7 +1,7 @@
 # SqlBulkInsert.Helper
 
 
-
+[![Build Status](http://gbach.net:8080/job/SqlBulkInsert/badge/icon)](http://gbach.net:8080/job/SqlBulkInsert)
 [![Build Status](http://gbach.net:8080/buildStatus/icon?job=SqlBulkInsert)](http://gbach.net:8080/job/SqlBulkInsert)
 
 Example of inserting a list of objects 
