@@ -1,6 +1,8 @@
 # SqlBulkInsert.Helper
 
-[![Build status](https://ci.appveyor.com/api/projects/status/yy19phy734qkghnt?svg=true)](https://ci.appveyor.com/project/gbachs/sqlbulkinsert-helper)
+
+
+[![Build Status](http://gbach.net:8080/buildStatus/icon?job=SqlBulkInsert)](http://gbach.net:8080/job/SqlBulkInsert)
 
 Example of inserting a list of objects 
 ```csharp
